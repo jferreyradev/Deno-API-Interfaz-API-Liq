@@ -1,11 +1,7 @@
 
 const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
 
-//Deno.env.set("URL_API", "http://192.168.1.59:3005");
-
-//Deno.env.set("URL_API", "http://www.serverburru2.duckdns.org:3005");
-
-const URL_API = Deno.env.get("URL_API");
+const URL_API = "http://www.serverburru2.duckdns.org:3005";
 
 async function handler(req: Request): Promise<Response> {
   
