@@ -1,9 +1,7 @@
 
 const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
 
-//const URL_API = "http://www.serverburru2.duckdns.org:3005";
-
-const URL_API = Deno.env.get("URL_API");
+const URL_API = "http://200.55.244.26:3005"
 
 async function handler(req: Request): Promise<Response> {
   
@@ -13,7 +11,6 @@ async function handler(req: Request): Promise<Response> {
 
     try {
       const URL = URL_API + match.pathname.input + (match.search.input?'?'+match.search.input:"")
-      //console.log('fetch to: '+ URL)
       const resp = await fetch(URL,{
         headers: {
           accept: "application/json",
@@ -33,6 +30,8 @@ async function handler(req: Request): Promise<Response> {
       });
     }
   }
+
+  console.log(URL_API)
 
   return new Response("Not found path", {
     status: 404,
