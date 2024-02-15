@@ -24,7 +24,7 @@ async function handler(req: Request): Promise<Response> {
         status: 200 ,
         headers: {
           "Access-Control-Allow-Origin":"*",
-          "content-type": "application/pdf",
+          "content-type": "application/octet-stream",
         },
       });
 
