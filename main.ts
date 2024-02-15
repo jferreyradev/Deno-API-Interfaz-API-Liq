@@ -40,8 +40,6 @@ async function handler(req: Request): Promise<Response> {
 
   if (match) {
 
-    console.log(match)
-
     try {
       const URL = URL_API + match.pathname.input + (match.search.input?'?'+match.search.input:"")
       //console.log('fetch to: '+ URL)
