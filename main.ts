@@ -1,6 +1,6 @@
 
 //const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
-const MID_API = new URLPattern({ pathname: "/api/*? });
+const MID_API = new URLPattern({ pathname: "/api/*?" });
 
 //const URL_API = "http://www.serverburru2.duckdns.org:3005";
 
