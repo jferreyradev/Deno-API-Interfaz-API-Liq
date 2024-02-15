@@ -20,11 +20,17 @@ async function handler(req: Request): Promise<Response> {
           accept: "application/pdf",
         },
       })     
+
+      const fn = resp.headers.get('content-disposition')
+
+      //console.log(fn.split("=")[1])
+
       return new Response(resp.body, {
         status: 200 ,
         headers: {
           "Access-Control-Allow-Origin":"*",
           "content-type": "application/octet-stream",
+          "Content-Disposition":"attachment; filename = " + fn.split("=")[1] + ".pdf"
         },
       });
 
