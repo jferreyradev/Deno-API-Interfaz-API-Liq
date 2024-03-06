@@ -2,7 +2,7 @@
 const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
 const MID_API_BOLETA = new URLPattern({ pathname: "/api/boleta*?" });
 
-const URL_API = "http://200.55.244.26:3005"
+const URL_API = "http://www.serverconcepcion.duckdns.org:3007"
 
 async function handler(req: Request): Promise<Response> {
 
