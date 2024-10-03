@@ -53,9 +53,12 @@ async function handler(req: Request): Promise<Response> {
       console.log("fetch to: " + URL);
       console.log("match to: " + match.pathname.groups.action);
       console.log("match to: " + match.pathname.groups.en);
-      console.log(req.body)
+      console.log(req.body);
 
-      if (match.pathname.groups.action == "view" || match.pathname.groups.en == "list" ) {
+      if (
+        match.pathname.groups.action == "view" ||
+        match.pathname.groups.en == "list"
+      ) {
         const resp = await fetch(URL, {
           headers: {
             accept: "application/json",
@@ -72,26 +75,26 @@ async function handler(req: Request): Promise<Response> {
       }
 
       if (match.pathname.groups.action == "sp") {
+        if (req.body) {
+          const bodyparam = await req.text();
+          console.log("Body:", bodyparam);
 
-        const resp = await fetch(URL, {
-          method: "POST",
-          headers: {
+          const resp = await fetch(URL, {
+            method: "POST",
+            headers: {
               "Content-Type": "application/json",
-          },
-          body: JSON.stringify(req.body)
-        });
-
-        console.log(req)
-        
-        return new Response(resp.body, {
-          status: 200,
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "content-type": "application/json",
-          },
-        });
+            },
+            body: bodyparam
+          });
+          return new Response(resp.body, {
+            status: 200,
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "content-type": "application/json",
+            },
+          });
+        }
       }
-
     } catch (error) {
       return new Response(error, {
         status: 404,
