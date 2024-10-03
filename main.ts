@@ -84,7 +84,7 @@ async function handler(req: Request): Promise<Response> {
             headers: {
               "Content-Type": "application/json",
             },
-            body: bodyparam
+            body: bodyparam,
           });
           return new Response(resp.body, {
             status: 200,
