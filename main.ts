@@ -71,7 +71,7 @@ async function handler(req: Request): Promise<Response> {
           headers: {
             accept: "application/json",
           },
-        };
+        });
         
         return new Response(resp.body, {
           status: 200,
