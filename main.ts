@@ -81,7 +81,8 @@ async function handler(req: Request): Promise<Response> {
             "content-type": "application/json",
           },
         });
-
+      
+      /*
       if (match.pathname.groups.action == "sp") {
         if (req.body) {
           const bodyparam = await req.text();
@@ -103,6 +104,8 @@ async function handler(req: Request): Promise<Response> {
           });
         }
       }
+    */
+      
     } catch (error) {
       return new Response(error, {
         status: 404,
