@@ -66,6 +66,7 @@ async function handler(req: Request): Promise<Response> {
             accept: "application/json",
           },
         });
+      }
       */
         const resp = await fetch(URL, {
           headers: {
@@ -80,7 +81,6 @@ async function handler(req: Request): Promise<Response> {
             "content-type": "application/json",
           },
         });
-      }
 
       if (match.pathname.groups.action == "sp") {
         if (req.body) {
