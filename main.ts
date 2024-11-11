@@ -67,12 +67,15 @@ async function handler(req: Request): Promise<Response> {
           },
         });
       }
-      */
+      
         const resp = await fetch(URL, {
           headers: {
             accept: "application/json",
           },
         });
+      */
+
+        const resp = await fetch(URL);
         
         return new Response(resp.body, {
           status: 200,
