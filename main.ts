@@ -50,11 +50,13 @@ async function handler(req: Request): Promise<Response> {
         match.pathname.input +
         (match.search.input ? "?" + match.search.input : "");
 
+      /*
       console.log("fetch to: " + URL);
       console.log("match to: " + match.pathname.groups.action);
       console.log("match to: " + match.pathname.groups.en);
       console.log(req.body);
-
+      */
+      /*
       if (
         match.pathname.groups.action == "view" ||
         match.pathname.groups.en == "list"
@@ -64,7 +66,13 @@ async function handler(req: Request): Promise<Response> {
             accept: "application/json",
           },
         });
-
+      */
+        const resp = await fetch(URL, {
+          headers: {
+            accept: "application/json",
+          },
+        };
+        
         return new Response(resp.body, {
           status: 200,
           headers: {
