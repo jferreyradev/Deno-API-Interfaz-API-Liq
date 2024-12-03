@@ -48,7 +48,7 @@ async function handler(req: Request): Promise<Response> {
     let content = "application/json";
 
     try {
-      if (match.pathname.groups.action == "view") {
+      if (match.pathname.groups.action == "view" || match.pathname.groups.action == "repo") {
         URL =
           URL_API +
           match.pathname.input +
