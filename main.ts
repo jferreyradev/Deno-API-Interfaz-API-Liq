@@ -2,10 +2,10 @@
 const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
 const MID_API_BOLETA = new URLPattern({ pathname: "/api/boleta*?" });
 
-const URL_API = "http://www.serverconcepcion.duckdns.org:3007"
+//const URL_API = "http://www.serverconcepcion.duckdns.org:3007"
 
 //const URL_API = "http://www.serverburru2.duckdns.org:3005";
-//const URL_API = "http://192.168.1.34:3005";
+const URL_API = "http://181.110.78.148:3007";
 //const URL_API = Deno.env.get("URL_API");
 
 async function handler(req: Request): Promise<Response> {
