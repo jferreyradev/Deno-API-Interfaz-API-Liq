@@ -1,93 +1,109 @@
-
-const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
-const MID_API_BOLETA = new URLPattern({ pathname: "/api/boleta*?" });
+//const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
+//const MID_API_BOLETA = new URLPattern({ pathname: "/api/boleta*?" });
 
 //const URL_API = "http://www.serverconcepcion.duckdns.org:3007"
 
 //const URL_API = "http://www.serverburru2.duckdns.org:3005";
-const URL_API = "http://181.80.140.213:3007";
+//const URL_API = "http://181.80.140.213:3007";
 //const URL_API = Deno.env.get("URL_API");
 
+async function verifyIP() {
+  const URL = "https://josrferreyr-apiserverde-79.deno.dev/items/Concepcion";
+  const resp = await fetch(URL, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+  const obj = await resp.json();
+  console.log(obj.value.ip);
+  return obj.value.ip || null;
+}
+
 async function handler(req: Request): Promise<Response> {
-  const match1 = MID_API_BOLETA.exec(req.url);
+  const PUBLIC_IP = await verifyIP();
 
-  if (match1) {
-    try {
-      const URL =
-        URL_API +
-        match1.pathname.input +
-        (match1.search.input ? "?" + match1.search.input : "");
-        
-      const resp = await fetch(URL, {
-        headers: {
-          accept: "application/pdf",
-        },
-      });
+  if (PUBLIC_IP) {
+    const MID_API = new URLPattern({ pathname: "/api/:action/:en/*?" });
+    const MID_API_BOLETA = new URLPattern({ pathname: "/api/boleta*?" });
 
-      const fn = resp.headers.get("content-disposition");
+    const URL_API = `http://${PUBLIC_IP}:3007`;
 
-      //console.log(fn.split("=")[1])
+    const match1 = MID_API_BOLETA.exec(req.url);
 
-      return new Response(resp.body, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "content-type": "application/pdf",
-          "Content-Disposition":
-            "attachment; filename = " + fn.split("=")[1] + ".pdf",
-        },
-      });
-    } catch (error) {
-      return new Response(error, {
-        status: 404,
-      });
-    }
-  }
-
-  const match = MID_API.exec(req.url);
-
-  if (match) {
-    let URL = "";
-    let option = {};
-    let content = "application/json";
-
-    try {
-      if (match.pathname.groups.action == "view") {
-        URL =
+    if (match1) {
+      try {
+        const URL =
           URL_API +
-          match.pathname.input +
-          (match.search.input ? "?" + match.search.input : "");
+          match1.pathname.input +
+          (match1.search.input ? "?" + match1.search.input : "");
 
-          option = {
-            headers: {
-              accept: "application/json",
-            },
-          }
+        const resp = await fetch(URL, {
+          headers: {
+            accept: "application/pdf",
+          },
+        });
 
-      } else if (match.pathname.groups.action == "en") {
-        URL =
-          URL_API +
-          "/api/" +
-          match.pathname.groups.en +
-          (match.search.input ? "?" + match.search.input : "");
+        const fn = resp.headers.get("content-disposition");
 
-          option = {
-            headers: {
-              accept: "application/json",
-            },
-          }
+        //console.log(fn.split("=")[1])
 
-      } else if (match.pathname.groups.action == "txt") {
-        URL =
-          URL_API +
-          match.pathname.input +
-          (match.search.input ? "?" + match.search.input : "");
-
-          content = "text/plain"
-
+        return new Response(resp.body, {
+          status: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-type": "application/pdf",
+            "Content-Disposition":
+              "attachment; filename = " + fn.split("=")[1] + ".pdf",
+          },
+        });
+      } catch (error) {
+        return new Response(error, {
+          status: 404,
+        });
       }
+    }
 
-      /*
+    const match = MID_API.exec(req.url);
+
+    if (match) {
+      let URL = "";
+      let option = {};
+      let content = "application/json";
+
+      try {
+        if (match.pathname.groups.action == "view") {
+          URL =
+            URL_API +
+            match.pathname.input +
+            (match.search.input ? "?" + match.search.input : "");
+
+          option = {
+            headers: {
+              accept: "application/json",
+            },
+          };
+        } else if (match.pathname.groups.action == "en") {
+          URL =
+            URL_API +
+            "/api/" +
+            match.pathname.groups.en +
+            (match.search.input ? "?" + match.search.input : "");
+
+          option = {
+            headers: {
+              accept: "application/json",
+            },
+          };
+        } else if (match.pathname.groups.action == "txt") {
+          URL =
+            URL_API +
+            match.pathname.input +
+            (match.search.input ? "?" + match.search.input : "");
+
+          content = "text/plain";
+        }
+
+        /*
       console.log("fetch to: " + URL);
       console.log("match to: " + match.pathname.groups.action);
       console.log("match to: " + match.pathname.groups.en);
@@ -95,19 +111,20 @@ async function handler(req: Request): Promise<Response> {
 
       /*** */
 
-      const resp = await fetch(URL, option);
+        const resp = await fetch(URL, option);
 
-      return new Response(resp.body, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "content-type": content ,
-        },
-      });
-    } catch (error) {
-      return new Response(error, {
-        status: 404,
-      });
+        return new Response(resp.body, {
+          status: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "content-type": content,
+          },
+        });
+      } catch (error) {
+        return new Response(error, {
+          status: 404,
+        });
+      }
     }
   }
 
